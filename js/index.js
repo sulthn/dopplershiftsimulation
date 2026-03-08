@@ -382,6 +382,14 @@ function toggleAck() {
 }
 
 function resize() {
+    if (window.innerWidth < 650) {
+        document.getElementsByClassName("loading")[0].style.display = 'block';
+        document.getElementById("loading_msg").innerHTML = "Your display is too small!";
+    }
+    else {
+        document.getElementsByClassName("loading")[0].style.display = 'none';
+    }
+
     target_width = canvas.clientWidth - 40;
     target_height = canvas.clientHeight - 40;
 
