@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Doppler Effect Simulation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Radio+Canada:ital,wght@0,300..700;1,300..700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js">
+    </script>
+</head>
+
+<body>
+    <div class="encapsulate">
+        <div class="cam-graph-container" id="cgc">
+            <div class="canvas-container">
+                <canvas class="" id="canvas"></canvas>
+            </div>
+            <div class="center-block container" id="graph-container">
+                <button class="material-symbols-outlined" id="mute">
+                    volume_off
+                </button>
+            </div>
+        </div>
+
+        <div class="explanation-container">
+            <div class="explanation container" id="ex">
+                <h1>Doppler Effect / Doppler Shift</h1>
+                <hr>
+                <div class="paragraph">
+                    <p>In class, teachers usually give an explanation of the Doppler's Effect by letting students
+                        imagine an
+                        ambulance 🚑 (source of sound) passing by an observer 🧍‍♂️ and it goes like 🚨eeeEEEEeeooo..🚨
+                        or so they said.<br><br>
+
+                        Yet, having not heard of those before, it's probably hard to imagine, right?<br><br>
+
+                        This website allows you to simulate that experience using <span
+                            style="text-decoration: underline;">your hand</span>✋ as a sound source and <span
+                            style="text-decoration: underline;">your
+                            device's camera</span>📷 as a stationary observer, letting you explore how 🔊 frequency
+                        changes with
+                        distance and how it would be received 📥.<br><br>
+
+                        Let's see what the effect is all about:<br><br>
+                    </p>
+                    <p><span style="font-weight: bold; font-size: 20px;">What is the Doppler's Effect?</span> 🌊<br>
+                        The Doppler Effect is the change in the observed frequency of a wave when there is relative
+                        motion between a wave source and an observer🔭.<br><br>
+
+                        ☑️ When the source of a wave moves towards the observer, the waves become compressed, causing
+                        the observed frequency to increase 📈 (higher pitch for sound).<br>
+                        ☑️ When the source moves away from the observer, the waves become spread out, causing the
+                        observed frequency to decrease 📉 (lower pitch).<br><br>
+
+                        This effect occurs with all types of waves, including: Sound waves 🔊, Light waves💡, and Water
+                        waves💧. However, it is most easily observed with sound, such as the changing pitch of a passing
+                        ambulance siren.<br><br>
+
+                        Basic Relationship 🔊<br>
+                        For sound waves, the observed frequency (f') depends on:<br>
+                        👉 speed of the wave (v)<br>
+                        👉 velocity of the source ( vs)<br>
+                        👉 velocity of the observer ( v0)<br>
+
+                        A simplified relationship used is:
+                    </p>
+                    <p class="latex">\[f_0=f_s\frac{v \pm v_o}{v \mp v_s}\]</p>
+                </div>
+                <button class="material-symbols-outlined" id="ack_">
+                    assignment
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="acknowledgements" style="display: none;">
+        <div class="ack_page">
+            <h1>Acknowledgements</h1>
+            <p>Group ThisAbility: Bernard Shareef Istiqlal, Felicia Kurniawan, Luffyna Laureta Joyce Kanindra, Sulthan Naufalino Yahya</p>
+            <p>Physics Teacher: Syakti P. Sriyansyah</p>
+        </div>
+    </div>
+
+    <div class="invisible">
+        <video id="video" class="hidden" autoplay playsinline></video>
+        <canvas id="canvas2"></canvas>
+    </div>
+
+    <div id="blur">
+    </div>
+    <div id="spotlight">
+        <p id="spotlight_description" style="bottom: -25px;"></p>
+        <button id="spotlight_button" style="bottom: -55px;"></button>
+    </div>
+
+
+    <div class="loading">
+        <h1>Please wait...</h1>
+    </div>
+
+
+    <!--<div class="container">
+        <input type="checkbox" id="face" name="classifier" value="face" checked>
+        <label for="face">face</label>
+        <input type="checkbox" id="eye" name="cascade" value="eye">
+        <label for="eye">eye</label>
+    </div> -->
+
+
+    <div style="visibility: hidden;" class="control3"></div>
+    <script src="https://unpkg.com/wasm-feature-detect/dist/umd/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
+        crossorigin="anonymous"></script>
+    <script src="js/d3.v7.min.js"></script>
+    <script src="js/graph.js"></script>
+    <script src="js/tour.js"></script>
+    <script type="module" src="js/index.js"></script>
+</body>
+
+</html>

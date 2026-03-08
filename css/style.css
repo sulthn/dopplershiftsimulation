@@ -1,0 +1,356 @@
+* {
+    margin: 0;
+}
+
+body {
+    overflow: hidden;
+    background-color: #021602;
+}
+
+h1 {
+    font-family: "Kosugi Maru", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+p {
+    font-family: "Radio Canada", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+        "wdth" 100;
+}
+
+.container {
+    background-color: #041f09;
+    border-color: #002a00;
+    border-style: solid;
+    border-radius: 15px;
+    border-width: 1px;
+}
+
+.encapsulate {
+    display: flex;
+    height: 100vh;
+}
+
+.cam-graph-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 60vw;
+    justify-content: space-between;
+}
+
+.explanation-container {
+    min-width: 40vw;
+    box-sizing: border-box;
+}
+
+.canvas-container {
+    height: 70%;
+    box-sizing: border-box;
+    margin: 20px;
+    margin-bottom: 0px;
+}
+
+#canvas {
+    width: 100%;
+    height: 100%;
+
+    box-sizing: border-box;
+
+    background-color: #072c0e;
+
+    border-style: solid;
+    border-radius: 15px;
+    border-width: 0px;
+}
+
+#graph-container {
+    height: 30%;
+    margin: 20px;
+    margin-top: 10px;
+
+    box-sizing: border-box;
+
+    /* aspect ratio */
+    vertical-align: top;
+    overflow: hidden;
+    position: relative;
+}
+
+.explanation {
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+    padding: 20px;
+    margin: 20px;
+    margin-left: 5px;
+
+    color: #faf2e3;
+
+    box-sizing: border-box;
+    position: relative;
+}
+
+.explanation h1 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.paragraph {
+    box-sizing: border-box;
+    height: calc(100% - 50px);
+    overflow-y: scroll;
+    font-size: 16px;
+    padding: 10px;
+    padding-top: 15px;
+}
+
+.latex {
+    width: 100%;
+    text-align: middle;
+    font-size: 25px;
+}
+
+
+#mute {
+    color: #faf2e3;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #021602e0;
+    aspect-ratio: 1 / 1;
+    padding: 10px;
+
+    border-radius: 10px;
+    border: none;
+}
+
+#mute:hover {
+    background-color: #053d07e0;
+}
+
+path {
+    stroke: #c84a31;
+    stroke-width: 6;
+    fill: none;
+}
+
+.domain {
+    stroke: #faf2e3;
+    stroke-width: 1;
+    fill: none;
+}
+
+.tick {
+    color: #faf2e3
+}
+
+
+
+.invisible {
+    display: none;
+}
+
+.text-center {
+    text-align: center;
+}
+
+#info {
+    font: 16px 'Lucida Grande', sans-serif;
+}
+
+.center-block {
+    display: block;
+    margin: auto;
+}
+
+label {
+    padding-right: 10px;
+    width: 25%;
+    vertical-align: top;
+    font: 16px 'Lucida Grande', sans-serif;
+}
+
+
+.kosugi-maru-regular {
+    font-family: "Kosugi Maru", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.radio-canada-regular {
+    font-family: "Radio Canada", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+        "wdth" 100;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f100;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* draggable spotlight */
+#spotlight {
+    display: none;
+    position: absolute;
+    border: 1px solid #e0e0e0;
+    top: 0;
+    pointer-events: none;
+}
+
+#spotlight p {
+    position: absolute;
+    
+    left: 0;
+    margin: 0;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 4px 8px;
+    font-family: sans-serif;
+    font-size: 14px;
+    white-space: nowrap;
+    color: #faf2e3;
+
+    font-size: 16px;
+    font-family: "Radio Canada", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+        "wdth" 100;
+}
+
+#spotlight button {
+    position: absolute;
+    left: 0;
+    margin: 0;
+    background: rgba(0, 0, 0, 255);
+    padding: 5px 10px;
+    font-family: sans-serif;
+    font-size: 14px;
+    white-space: nowrap;
+    color: #faf2e3;
+    border: none;
+
+    font-size: 16px;
+    font-family: "Radio Canada", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+        "wdth" 100;
+    
+    pointer-events: all;
+}
+
+#spotlight button:hover {
+    background: rgba(20, 20, 20, 255);
+}
+
+/* blur overlay */
+#blur {
+    display: none;
+    position: fixed;
+    inset: 0;
+    backdrop-filter: blur(12px);
+
+    align-items: center;
+    justify-content: center;
+}
+
+#blur button {
+    font-family: "Kosugi Maru", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+
+    background-color: #04AA6D;
+    border: none;
+    border-radius: 15px;
+
+    color: #faf2e3;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    padding: 20px;
+}
+
+#blur button:hover {
+    background-color: #089461;
+}
+
+#acknowledgements {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    color: #faf2e3;
+}
+
+.ack_page {
+    align-items: center;
+    justify-content: center;
+    background-color: #202020;
+    border-radius: 15px;
+    aspect-ratio: 1.5/1;
+    margin: auto;
+    padding: 20px;
+    border-width: 2px;
+    border-color: #002a00;
+}
+
+#ack_ {
+    color: #faf2e3;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #021602e0;
+    aspect-ratio: 1 / 1;
+    padding: 10px;
+
+    border-radius: 10px;
+    border: none;
+    z-index: 2;
+}
+
+#ack_:hover {
+    background-color: #053d07e0;
+}
+
+.loading {
+    background-color: #021602;
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+
+    color: #faf2e3;
+    z-index: 3;
+}
+
+.loading h1 {
+    position: relative;
+    font-size: 22px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    top: calc(100%/2 - 22px / 2);
+}
