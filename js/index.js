@@ -3,12 +3,19 @@ import {
     FilesetResolver
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0";
 
+import {
+    drawOverlay,
+    initializeOverlay
+} from './overlay.js';
+
 const video = document.getElementById("video");
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 const canvas2 = document.getElementById("canvas2");
 const ctx2 = canvas2.getContext("2d");
+
+const canvasgl = document.getElementById("canvasgl");
 
 const canvas_container = document.getElementById("container");
 
@@ -32,6 +39,10 @@ const HAND_CONNECTIONS = [
 ];
 
 /* ---------------- STATE ---------------- */
+
+let settings = {
+    overlay: null,
+};
 
 let handLandmarker;
 let loaded;
@@ -143,24 +154,16 @@ function drawVideoFrame() {
 }
 
 function drawHand(hand) {
-    ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
     drawConnectors(ctx2, hand, HAND_CONNECTIONS, {
         color: "#c84a31",
         lineWidth: 5
     });
     drawLandmarks(ctx2, hand, { color: "#20e020", lineWidth: 1, radius: () => { return 3; } });
 
-    //const scale = target_width / video_width;
-
     const scale = Math.max(target_width / video_width, target_height / video_height);
 
     const cropW = target_width / scale;
     const cropH = target_height / scale;
-
-    const scaledW = video_width * scale;
-    const scaledH = video_height * scale;
-
-    //const sy = (scaledH - target_height) / 2;
 
     const sx = (video_width - cropW) / 2;
     const sy = (video_height - cropH) / 2;
@@ -204,6 +207,37 @@ function drawUI(velocity, status) {
     ctx.fillText(str_msg, 20, 80);
 }
 
+function drawWaveOverlay(velocity, hand, status) {
+    let middleX = (hand[5].x + hand[17].x + hand[0].x) / 3;
+    let middleY = (hand[5].y + hand[17].y + hand[0].y) / 3;
+
+    const scale = Math.max(target_width / video_width, target_height / video_height);
+    const scaleX = target_width / video_width;
+    const scaleY = target_height / video_height;
+
+    const cropW = target_width / scale;
+    const cropH = target_height / scale;
+
+    const sx = (video_width - cropW) / 2;
+    const sy = (video_height - cropH) / 2;
+
+    drawOverlay(ctx2, (status != 0) ? velocity : 0, [middleX, middleY], scale);
+
+    ctx2.drawImage(
+        canvasgl,
+        0,
+        0,
+        video_width,
+        video_height,
+    );
+
+    ctx2.beginPath();
+
+    ctx2.arc(cropW * middleX, cropH * middleY, 20, 0, 2 * Math.PI);
+    ctx2.fillStyle = "red";
+    ctx2.fill();
+}
+
 /* ---------------- PROCESS HAND ---------------- */
 
 let finalfreq = 220;
@@ -218,6 +252,9 @@ function processHand(hand, time) {
 
     const status = getMovementStatus(velocity);
 
+    ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+    if (settings.overlay)
+        drawWaveOverlay(velocity, hand, status);
     drawHand(hand);
     drawUI(velocity, status);
 
@@ -267,8 +304,9 @@ async function startCamera() {
 
     var constraints = {
         video: {
-            width: { ideal: 1280 },
-            height: { ideal: 720 }
+            width: { min: 1280 },
+            height: { min: 720 },
+            aspectRatio: 1.777777778
         }
     };
 
@@ -277,19 +315,27 @@ async function startCamera() {
     video.srcObject = stream;
 
     video.onloadedmetadata = () => {
-
+        const track = stream.getVideoTracks()[0];
         document.getElementsByClassName("loading")[0].style.display = 'none';
 
-        video_width = video_element.videoWidth;
-        video_height = video_element.videoHeight;
+        console.log(track.getSettings());
+
+        video_width = track.getSettings().width;//video_element.videoWidth;
+        video_height = track.getSettings().height;//video_element.videoHeight;
 
         canvas2.width = video_width;
         canvas2.height = video_height;
 
+        canvasgl.width = video_width;
+        canvasgl.height = video_height;
+
         canvas.width = target_width;
         canvas.height = target_height;
 
+        console.log(canvas2.width, canvas2.height);
+        console.log(canvas.width, canvas.height);
 
+        initializeOverlay();
 
         requestAnimationFrame(detectLoop);
     };
@@ -374,11 +420,24 @@ export function toggleAudio() {
 const ack_btn = document.getElementById("ack_");
 const ack = document.getElementById("acknowledgements");
 
+const waves_en = document.getElementById("waves_en");
+
 function toggleAck() {
     if (ack.style.display == 'flex')
         ack.style.display = 'none';
     else
         ack.style.display = 'flex';
+}
+
+function toggleWaves() {
+    if (settings.overlay == false) {
+        settings.overlay = true;
+        waves_en.innerHTML = "circle_circle";
+    }
+    else {
+        settings.overlay = false;
+        waves_en.innerHTML = "hand_bones";
+    }
 }
 
 function resize() {
@@ -408,6 +467,8 @@ async function init() {
 
     await startCamera();
 
+    settings.overlay = false;
+
     setupGraph();
     startAudio();
     stopAudio();
@@ -422,3 +483,4 @@ window.toggleAudio = toggleAudio;
 window.addEventListener("resize", resize);
 audio_element.addEventListener("click", toggleAudio);
 ack_btn.addEventListener("click", toggleAck);
+waves_en.addEventListener("click", toggleWaves);

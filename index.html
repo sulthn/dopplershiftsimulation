@@ -26,6 +26,9 @@
                 <button class="material-symbols-outlined" id="mute">
                     volume_off
                 </button>
+                <button class="material-symbols-outlined" id="waves_en">
+                    hand_bones
+                </button>
             </div>
         </div>
 
@@ -83,7 +86,18 @@
     <div id="acknowledgements" style="display: none;">
         <div class="ack_page">
             <h1>Acknowledgements</h1>
-            <p>Group ThisAbility: Bernard Shareef Istiqlal, Felicia Kurniawan, Luffyna Laureta Joyce Kanindra, Sulthan Naufalino Yahya</p>
+            <br>
+            <p>Group μ-wave: </p>
+            <li>Bernard Shareef Istiqlal</li>
+            <p>Designer</p>
+            <li>Demetrea Sandrea Suniadji</li>
+            <p>Researcher</p>
+            <li>Felicia Kurniawan</li>
+            <p>Researcher/Designer</p>
+            <li>Luffyna Laureta Joyce Kanindra</li>
+            <p>Designer</p>
+            <li>Sulthan Naufalino Yahya</li>
+            <p>Programmer</p>
             <p>Physics Teacher: Syakti P. Sriyansyah</p>
         </div>
     </div>
@@ -91,6 +105,7 @@
     <div class="invisible">
         <video id="video" class="hidden" autoplay playsinline></video>
         <canvas id="canvas2"></canvas>
+        <canvas id="canvasgl"></canvas>
     </div>
 
     <div id="blur">
@@ -106,14 +121,6 @@
     </div>
 
 
-    <!--<div class="container">
-        <input type="checkbox" id="face" name="classifier" value="face" checked>
-        <label for="face">face</label>
-        <input type="checkbox" id="eye" name="cascade" value="eye">
-        <label for="eye">eye</label>
-    </div> -->
-
-
     <div style="visibility: hidden;" class="control3"></div>
     <script src="https://unpkg.com/wasm-feature-detect/dist/umd/index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
@@ -122,6 +129,7 @@
     <script src="js/graph.js"></script>
     <script src="js/tour.js"></script>
     <script type="module" src="js/index.js"></script>
+    <script type="module" src="js/overlay.js"></script>
 </body>
 
 </html>
